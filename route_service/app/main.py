@@ -1,9 +1,21 @@
+from contextlib import asynccontextmanager
+
 import uvicorn
 from fastapi import FastAPI
 
+from app.db import ensure_indexes
 from app.routers import route_router
 
-app = FastAPI(title="Route Service")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await ensure_indexes()
+    yield
+
+app = FastAPI(
+    title="Route Service",
+    lifespan=lifespan,
+)
 app.include_router(route_router.router)
 
 
