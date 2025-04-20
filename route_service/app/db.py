@@ -1,18 +1,9 @@
-from typing import Dict
-from app.models import Route
+import os
 
-"""
-"Фейковая" база данных - словарь:
-  key = route_id
-  value = Route
-"""
+from motor.motor_asyncio import AsyncIOMotorClient
 
-fake_routes_db: Dict[int, Route] = {}
+MONGODB_URL = os.getenv("MONGODB_URL", "mongodb://mongo_db:27017")
+MONGODB_DB = os.getenv("MONGODB_DB", "route_db")
 
-fake_route_id_sequence = 0
-
-
-def get_next_route_id() -> int:
-    global fake_route_id_sequence
-    fake_route_id_sequence += 1
-    return fake_route_id_sequence
+client = AsyncIOMotorClient(MONGODB_URL)
+db = client[MONGODB_DB]
