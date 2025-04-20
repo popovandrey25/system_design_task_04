@@ -9,7 +9,7 @@ class RouteCreateRequest(BaseModel):
 
     start_point: str = Field(..., examples=["Moscow"])
     end_point: str = Field(..., examples=["Saint Petersburg"])
-    waypoints: Optional[List[str]] = Field(default=None, examples=["Tver", "Valdai"])
+    waypoints: Optional[List[str]] = Field(default=None, examples=[["Tver", "Valdai"]])
 
 
 class RouteResponse(BaseModel):
@@ -17,7 +17,7 @@ class RouteResponse(BaseModel):
     Схема ответа для информации о маршруте.
     """
 
-    route_id: int
+    route_id: str
     start_point: str
     end_point: str
     waypoints: List[str] = []
