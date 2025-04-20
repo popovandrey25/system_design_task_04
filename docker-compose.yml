@@ -3,6 +3,11 @@ services:
   postgres_db:
     image: postgres:14
     container_name: postgres_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d user_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     environment:
       POSTGRES_DB: user_db
       POSTGRES_USER: user
@@ -16,7 +21,8 @@ services:
     build: ./user_service
     container_name: user_service
     depends_on:
-      - postgres_db
+      postgres_db:
+        condition: service_healthy
     ports:
       - "8000:8000"
     environment:
