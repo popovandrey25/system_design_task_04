@@ -7,7 +7,7 @@ class Route:
     """
 
     def __init__(
-        self, route_id: int, start_point: str, end_point: str, waypoints: Optional[List[str]]
+        self, route_id: str, start_point: str, end_point: str, waypoints: Optional[List[str]]
     ):
         self.route_id = route_id
         self.start_point = start_point
