@@ -16,3 +16,10 @@ class RouteService:
 
     async def list_routes(self) -> List[Route]:
         return await self.repo.get_all_routes()
+
+    async def search_routes(
+        self,
+        start_point: Optional[str] = None,
+        end_point: Optional[str] = None,
+    ) -> List[Route]:
+        return await self.repo.find_routes(start_point, end_point)

@@ -39,3 +39,26 @@ class RouteRepository:
                 )
             )
         return routes
+
+    @staticmethod
+    async def find_routes(
+        start_point: Optional[str] = None,
+        end_point: Optional[str] = None,
+    ) -> List[Route]:
+        query: dict = {}
+        if start_point:
+            query["start_point"] = start_point
+        if end_point:
+            query["end_point"] = end_point
+
+        routes: List[Route] = []
+        async for doc in RouteRepository.collection.find(query):
+            routes.append(
+                Route(
+                    route_id=str(doc["_id"]),
+                    start_point=doc["start_point"],
+                    end_point=doc["end_point"],
+                    waypoints=doc.get("waypoints", []),
+                )
+            )
+        return routes
